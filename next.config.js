@@ -6,6 +6,9 @@ const nextConfig = {
     DB_LOCAL_URI: "mongodb://localhost:27017/bookit",
   },
   webpack5: false,
+  images: {
+    domains: ["res.cloudinary.com"],
+  },
 };
 
 module.exports = nextConfig;
