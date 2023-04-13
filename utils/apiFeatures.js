@@ -27,6 +27,7 @@ class APIFeatures {
     removeFields.forEach((el) => delete queryCopy[el]);
 
     this.query = this.query.find(queryCopy);
+
     return this;
   }
 
