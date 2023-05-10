@@ -10,7 +10,6 @@ const RoomDetails = () => {
   const dispatch = useDispatch();
 
   const { room, error } = useSelector((state) => state.roomDetails);
-  console.log(room);
 
   useEffect(() => {
     if (error) {
@@ -21,16 +20,16 @@ const RoomDetails = () => {
 
   return (
     <div className="container container-fluid">
-      <h2 className="mt-5">{room.name}</h2>
+      <h2 className="mt-5">{room?.name}</h2>
 
       <div className="ratings mt-auto mb-3">
         <div className="rating-outer">
           <div
             className="rating-inner"
-            style={{ width: `${(room.ratings / 5) * 100}%` }}
+            style={{ width: `${(room?.ratings / 5) * 100}%` }}
           ></div>
         </div>
-        <span id="no_of_reviews">({room.numOfReviews} Reviews)</span>
+        <span id="no_of_reviews">({room?.numOfReviews} Reviews)</span>
       </div>
 
       <Carousel pause="hover">

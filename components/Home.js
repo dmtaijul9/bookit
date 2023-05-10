@@ -9,9 +9,10 @@ import Link from "next/link";
 const Home = () => {
   const { rooms, error, resPerPage, roomsCount, filteredRoomsCount } =
     useSelector((store) => store.allRooms);
-  console.log(resPerPage, roomsCount, filteredRoomsCount);
+
   let { page = 1 } = useRouter().query;
   page = Number(page);
+  const { location } = useRouter().query;
 
   useEffect(() => {
     if (error) {
@@ -26,7 +27,11 @@ const Home = () => {
   return (
     <>
       <section id="rooms" className="container mt-5">
-        <h2 className="mb-3 ml-2 stays-heading">Stays in New York</h2>
+        {location ? (
+          <h2 className="mb-3 ml-2 stays-heading">
+            {location ? `Rooms in ${location}` : "All Rooms"}
+          </h2>
+        ) : null}
 
         <Link href="/search">
           <a className="ml-2 back-to-search">
@@ -40,7 +45,7 @@ const Home = () => {
             </div>
           ) : (
             rooms &&
-            rooms.map((room) => <RoomItem room={room} key={rooms._id} />)
+            rooms.map((room) => <RoomItem room={room} key={room._id} />)
           )}
         </div>
       </section>

@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 const RoomItem = ({ room }) => {
-  console.log(room);
   return (
     <div className="col-sm-12 col-md-6 col-lg-3 my-3">
       <div className="card p-2">
@@ -22,7 +21,7 @@ const RoomItem = ({ room }) => {
 
           <div className="ratings mt-auto mb-3">
             <p className="card-text">
-              <b>$12</b> / night
+              <b>${room.pricePerNight}</b> / night
             </p>
 
             <div className="rating-outer">
