@@ -16,7 +16,6 @@ cloudinary.v2.config({
 const registerUser = catchAsyncErrors(async (req, res, next) => {
   const { email, name, password, avatar } = req.body;
 
-  console.log(req.body);
   const uploadedAvatar = await cloudinary.v2.uploader.upload(avatar, {
     folder: "bookit/avatar",
     width: "150",
@@ -50,4 +49,44 @@ const currentUserProfile = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-export { registerUser, currentUserProfile };
+//update user profile  => /api/me/update
+
+const updateProfile = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findById(req.user._id);
+
+  const { name, email, avatar, password } = req.body;
+
+  if (user) {
+    user.name = name;
+    user.email = email;
+
+    if (password) user.password = password;
+  }
+
+  // Update avatar
+  if (avatar !== "") {
+    const image_id = user.avatar.public_id;
+    // Delete user previus image/avatar
+
+    await cloudinary.v2.uploader.destroy(image_id);
+
+    const uploadedAvatar = await cloudinary.v2.uploader.upload(avatar, {
+      folder: "bookit/avatar",
+      width: "150",
+      crop: "scale",
+    });
+
+    user.avatar = {
+      public_id: uploadedAvatar.public_id,
+      url: uploadedAvatar.secure_url,
+    };
+  }
+
+  await user.save();
+
+  res.status(200).json({
+    success: true,
+  });
+});
+
+export { registerUser, currentUserProfile, updateProfile };

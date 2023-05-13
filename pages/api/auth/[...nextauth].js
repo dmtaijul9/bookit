@@ -9,6 +9,7 @@ export default NextAuth({
   session: {
     jwt: true,
   },
+  secret: process.env.NEXTAUTH,
   providers: [
     Providers.Credentials({
       authorize: async (credentials, req) => {

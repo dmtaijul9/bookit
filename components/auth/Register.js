@@ -37,7 +37,7 @@ const Register = () => {
     e.preventDefault();
 
     const variables = { name, email, password, avatar };
-    console.log(variables);
+
     dispatch(registerUser(variables));
   };
 
