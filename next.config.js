@@ -12,10 +12,12 @@ const nextConfig = {
     NEXTAUTH_URL: "http://localhost:3000",
     NEXTAUTH_SECRET: "blablablablabla",
 
-    SMTP_HOST: "",
-    SMTP_PORT: "",
-    SMTP_USER: "",
-    SMTP_PASSWORD: "",
+    SMTP_HOST: "sandbox.smtp.mailtrap.io",
+    SMTP_PORT: "2525",
+    SMTP_USER: "496dc1bb136ccd",
+    SMTP_PASSWORD: "d706aa1ca387ba",
+    SMTP_FROM_NAME: "BookIT",
+    SMTP_FROM_EMAIL: "noreply@bookit.com",
   },
   webpack5: false,
   images: {

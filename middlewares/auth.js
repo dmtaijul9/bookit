@@ -6,7 +6,7 @@ export const isAuthenticatedUser = catchAsyncErrors(async (req, res, next) => {
   const session = await getSession({ req });
 
   if (!session) {
-    next(new ErrorHandler("Login first to access this resource", 401));
+    return next(new ErrorHandler("Login first to access this resource", 401));
   }
 
   req.user = session.user;
