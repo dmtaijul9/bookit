@@ -29,6 +29,7 @@ const Profile = () => {
   } = useSelector((state) => state.user);
 
   useEffect(() => {
+    dispatch({ type: UPDATE_PROFILE_RESET });
     if (apiUser) {
       setUser({
         name: apiUser.name,
@@ -46,7 +47,7 @@ const Profile = () => {
       router.push("/");
       dispatch({ type: UPDATE_PROFILE_RESET });
     }
-  }, [dispatch, apiUser, error, isUpdated]);
+  }, [dispatch, apiUser, error, isUpdated, loading]);
 
   const { name, email, password } = user;
 

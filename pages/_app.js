@@ -1,4 +1,5 @@
 import "../styles/globals.css";
+import "react-datepicker/dist/react-datepicker.css";
 
 import { wrapper } from "../redux/store";
 
