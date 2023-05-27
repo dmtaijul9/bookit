@@ -2,10 +2,16 @@ import axios from "axios";
 import {
   BOOKED_DATES_FAIL,
   BOOKED_DATES_SUCCESS,
+  BOOKING_DETAILS_FAIL,
+  BOOKING_DETAILS_SUCCESS,
   CHECK_BOOKING_FAIL,
   CHECK_BOOKING_REQUEST,
   CHECK_BOOKING_SUCCESS,
+  CLEAR_ERRORS,
+  MY_BOOKINGS_FAIL,
+  MY_BOOKINGS_SUCCESS,
 } from "../constants/bookingConstants";
+import absoluteUrl from "next-absolute-url";
 
 export const checkBooking =
   ({ roodId, checkInDate, checkOutDate }) =>
@@ -49,6 +55,54 @@ export const getBookedDates =
       });
     }
   };
+
+export const myBookings = (authCookies, req) => async (dispatch) => {
+  try {
+    const { origin } = absoluteUrl(req);
+
+    const config = {
+      headers: {
+        cookie: authCookies,
+      },
+    };
+
+    const { data } = await axios.get(`${origin}/api/booking/me`, config);
+
+    dispatch({
+      type: MY_BOOKINGS_SUCCESS,
+      payload: data.bookings,
+    });
+  } catch (error) {
+    dispatch({
+      type: MY_BOOKINGS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const bookingDetails = (authCookies, req, id) => async (dispatch) => {
+  try {
+    const { origin } = absoluteUrl(req);
+
+    const config = {
+      headers: {
+        cookie: authCookies,
+      },
+    };
+
+    const { data } = await axios.get(`${origin}/api/booking/${id}`, config);
+
+    dispatch({
+      type: BOOKING_DETAILS_SUCCESS,
+      payload: data.booking,
+    });
+  } catch (error) {
+    dispatch({
+      type: BOOKING_DETAILS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
 
 export const clearError = () => async (dispatch) => {
   dispatch({

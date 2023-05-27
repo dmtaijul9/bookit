@@ -102,4 +102,48 @@ const checkBookedDatesOfRoom = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-export { newBooking, checkRoomBookingAvailablity, checkBookedDatesOfRoom };
+// Get ALl bookings   => /api/booking/me
+const myBookings = catchAsyncErrors(async (req, res, next) => {
+  const bookings = await Booking.find({
+    user: req.user._id,
+  })
+    .populate({
+      path: "room",
+      select: "name pricePerNight images",
+    })
+    .populate({
+      path: "user",
+      select: "name email",
+    });
+
+  res.status(200).json({
+    success: true,
+    bookings,
+  });
+});
+
+// get booking details   => /api/booking/:id
+const getBookingDetails = catchAsyncErrors(async (req, res, next) => {
+  const booking = await Booking.findById(req.query.id)
+    .populate({
+      path: "room",
+      select: "name pricePerNight images",
+    })
+    .populate({
+      path: "user",
+      select: "name email",
+    });
+
+  res.status(200).json({
+    success: true,
+    booking,
+  });
+});
+
+export {
+  newBooking,
+  checkRoomBookingAvailablity,
+  checkBookedDatesOfRoom,
+  myBookings,
+  getBookingDetails,
+};
