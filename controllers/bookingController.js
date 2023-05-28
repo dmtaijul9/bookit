@@ -24,8 +24,6 @@ const newBooking = catchAsyncErrors(async (req, res, next) => {
     paymentInfo,
   } = req.body;
 
-  console.log(checkInDate);
-
   const booking = await Booking.create({
     user: req.user._id,
     room: roomId,
